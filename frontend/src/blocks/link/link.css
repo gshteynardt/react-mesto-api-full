@@ -1,0 +1,16 @@
+.link {
+	color: #fff;
+	text-decoration: none;
+	transition: opacity .3s ease;
+	font-weight: 400;
+	font-style: normal;
+	margin: 15px 0 0;
+}
+
+.link:hover {
+	opacity: .6;
+}
+
+.link:focus {
+	outline: 2px solid rgb(64, 154, 244);
+}

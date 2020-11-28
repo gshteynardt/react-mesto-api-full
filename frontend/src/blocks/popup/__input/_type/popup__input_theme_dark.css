@@ -1,0 +1,13 @@
+.popup__input_theme_dark {
+	border-bottom: 2px solid #CCC;
+	color: #fff;
+	margin-bottom: 30px;
+}
+
+.popup__input_theme_dark:last-of-type {
+	margin-bottom: 0;
+}
+
+.popup__input_theme_dark::placeholder {
+	color: #CCC;
+}

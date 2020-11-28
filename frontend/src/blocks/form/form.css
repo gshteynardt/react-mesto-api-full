@@ -1,0 +1,15 @@
+@import url('./__container/form__container.css');
+@import url('./__submit/form__submit.css');
+@import url('./__title/form__title.css');
+
+.form {
+	display: flex;
+	flex-direction: column;
+	box-sizing: border-box;
+	width: 100%;
+	justify-content: space-between;
+	align-items: center;
+	flex-grow: 1;
+	background-color: #000;
+	color: #fff;
+}

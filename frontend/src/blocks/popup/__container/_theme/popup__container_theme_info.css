@@ -1,0 +1,8 @@
+.popup_container_theme_info {
+	display: grid;
+	align-items: center;
+	justify-items: center;
+	padding: 60px;
+	box-sizing: content-box;
+	grid-gap: 32px;
+}

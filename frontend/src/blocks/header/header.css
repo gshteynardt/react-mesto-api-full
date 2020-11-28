@@ -1,0 +1,10 @@
+@import url(__logo/header__logo.css);
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'Inter', Arial, sans-serif;
+  border-bottom: 1px solid rgba(84, 84, 84, 0.7);
+  box-sizing: border-box;
+}
+
