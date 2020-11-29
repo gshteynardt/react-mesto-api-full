@@ -92,7 +92,7 @@ class Api {
 }
 
 const api = new Api({
-  baseUrl: `BASE_URL`,
+  baseUrl: BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },
