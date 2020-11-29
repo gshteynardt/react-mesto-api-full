@@ -1,4 +1,5 @@
 import {token} from "./token";
+import { BASE_URL } from "./auth";
 
 class Api {
   constructor({ baseUrl, headers }) {
@@ -91,7 +92,7 @@ class Api {
 }
 
 const api = new Api({
-  baseUrl: `http://localhost:3000`,
+  baseUrl: `BASE_URL`,
   headers: {
     'Content-Type': 'application/json',
   },
