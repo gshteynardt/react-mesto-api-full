@@ -46,8 +46,8 @@ class Api {
       method: 'POST',
       headers: this.getHeaders('mesto'),
       body: JSON.stringify({
-        name: data.name,
         link: data.link,
+        name: data.name,
       }),
     })
       .then((res) => this._handleOriginal(res));

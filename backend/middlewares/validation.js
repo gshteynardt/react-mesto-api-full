@@ -29,7 +29,7 @@ const validationUpdProfile = celebrate({
 
 const validationUpdAvatar = celebrate({
   body: Joi.object().keys({
-    avatar: Joi.string().required().custom(urlValidation),
+    avatar: Joi.string().custom(urlValidation).required(),
   }),
 });
 
@@ -43,7 +43,7 @@ const validationDataUser = celebrate({
 const validationDataCard = celebrate({
   body: Joi.object().keys({
     name: Joi.string().required().min(2).max(30),
-    link: Joi.string().required().custom(urlValidation),
+    link: Joi.string().custom(urlValidation).required(),
   }),
 });
 

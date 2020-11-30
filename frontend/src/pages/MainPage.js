@@ -115,7 +115,7 @@ const MainPage = ({ userData }) => {
     api.createCard(newCard)
       .then((newCard) => {
         const newItem = transformCard(newCard);
-        setCards([newItem, ...cards]);
+        setCards([...cards, newItem]);
         closeAllPopups();
       })
       .catch((err) => console.log(err));

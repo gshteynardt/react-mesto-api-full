@@ -1,4 +1,6 @@
-export const BASE_URL = 'https://api.artmesto.students.nomoredomains.monster';
+export const BASE_URL = process.env.NODE_ENV === 'production'
+  ? 'https://api.artmesto.students.nomoredomains.monster'
+  : 'http://localhost:3000';
 
 const handleResponse = (res) => {
   if (!res.ok) {

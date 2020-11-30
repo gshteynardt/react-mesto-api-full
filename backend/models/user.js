@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const isEmail = require('validator/lib/isEmail');
 const NotFoundError = require('../errors/not-found-err');
 const ConflictError = require('../errors/conflict-err');
+const isURL = require('validator/lib/isURL');
 
 const userSchema = new mongoose.Schema({
   email: {
@@ -38,9 +39,7 @@ const userSchema = new mongoose.Schema({
     required: false,
     default: 'https://pictures.s3.yandex.net/resources/jacques-cousteau_1604399756.png',
     validate: {
-      validator(v) {
-        return /^https?:\/\/(www\.)?[\w-.~:/?#[\]@!$&'()*+,;=]+#?$/gi.test(v);
-      },
+      validator: (value) => isURL(value),
       message: (props) => `${props.value} is not a valid avatar url!`,
     },
   },

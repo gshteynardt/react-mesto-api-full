@@ -1,3 +1,4 @@
+const isURL = require('validator/lib/isURL');
 const mongoose = require('mongoose');
 const Schema = require('mongoose');
 
@@ -10,13 +11,11 @@ const cardSchema = new mongoose.Schema({
   },
   link: {
     type: String,
+    required: [true, 'Card url required'],
     validate: {
-      validator(v) {
-        return /^https?:\/\/(www\.)?[\w-.~:/?#[\]@!$&'()*+,;=]+#?$/gi.test(v);
-      },
-      message: (props) => `${props.value} is not a valid avatar url!`,
+      validator: (value) => isURL(value),
+      message: (props) => `${props.value} is not a valid link url!`,
     },
-    required: [true, 'User avatar url required'],
   },
   owner: {
     type: Schema.Types.ObjectId,
