@@ -1,6 +1,7 @@
 const Card = require('../models/card');
 const NotFoundError = require('../errors/not-found-err');
 const ForbiddenError = require('../errors/forbidden-err');
+const BadRequestErr = require('../errors/bad-request-err');
 
 const getCards = async (req, res, next) => {
   try {
@@ -34,6 +35,9 @@ const createCard = async (req, res, next) => {
     const savedCard = await Card.create({ name, link, owner });
     res.status(200).send(savedCard);
   } catch (err) {
+    if(err.name === 'MongoError' || err.name === 'ValidationError') {
+      err = new BadRequestErr('Невалидные данные');
+    }
     next(err);
   }
   return null;
@@ -41,25 +45,24 @@ const createCard = async (req, res, next) => {
 
 const deleteCard = async (req, res, next) => {
   try {
-    const user = req.user._id;
+    const user = String(req.user._id);
     const { id } = req.params;
     const queryCard = await Card.findById(id).orFail(new Error('NotFound'));
-    const queryCardOwner = JSON.stringify(queryCard.owner).slice(1, -1);
+    const queryCardOwner = String(queryCard.owner);
 
     if (user !== queryCardOwner) {
       throw new ForbiddenError('Запрещено удалять карточки других пользователей');
-    } else {
-      const deletedCard = await Card.findByIdAndDelete(id);
-      if (!deletedCard) {
-        throw new NotFoundError('Карточка с таким id не нвйдена');
-      } else {
-        res.send(deletedCard);
-      }
     }
+
+    const deletedCard = await Card.findByIdAndDelete(id);
+    return res.send(deletedCard);
+
   } catch (err) {
+    if(err.message === 'NotFound') {
+      err = new NotFoundError('Карточка с таким id не найдена');
+    }
     next(err);
   }
-  return null;
 };
 
 const likeCard = async (req, res, next) => {

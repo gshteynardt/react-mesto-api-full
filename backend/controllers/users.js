@@ -1,8 +1,7 @@
 const bcrypt = require('bcryptjs');
 const User = require('../models/user');
-const NotFoundError = require('../errors/not-found-err');
-const ConflictError = require('../errors/conflict-err');
 const BadRequestErr = require('../errors/bad-request-err');
+const UnauthorizedErr = require('../errors/unauthorized-err');
 const { generateToken } = require('../utils/genereteToken');
 
 const soldRound = 10;
@@ -22,7 +21,7 @@ const getUser = async (req, res, next) => {
   try {
     const queryUser = await User.findById(_id).select('+password');
     if (!queryUser) {
-      throw new NotFoundError('Пользователя не существует');
+      throw new UnauthorizedErr('Пользователя не существует');
     } else {
       res.status(200).send(queryUser);
     }
@@ -56,7 +55,7 @@ const loginUser = async (req, res, next) => {
     const { email, password } = req.body;
     const user = await User.findUsersByCredentials(email, password);
     if (user.message) {
-      throw new ConflictError('Неправильные почта или пароль');
+      throw new UnauthorizedErr('Неправильные почта или пароль');
     } else {
       const payload = { _id: user._id };
       const token = await generateToken(payload);
@@ -96,6 +95,9 @@ const updateAvatarProfile = async (req, res, next) => {
       res.status(200).send(data);
     }
   } catch (err) {
+    if(err.name === 'MongoError' || err.name === 'ValidationError') {
+      err = new BadRequestErr('Невалидные данные');
+    }
     next(err);
   }
   return null;
