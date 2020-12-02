@@ -3,6 +3,8 @@ const userRoutes = require('./users.js');
 const cardsRoutes = require('./cards.js');
 const errorsRoutes = require('./errors.js');
 const auth = require('../middlewares/auth');
+const { validationDataUser } = require('../middlewares/validation');
+require('dotenv').config();
 
 const {
   loginUser,
@@ -15,8 +17,8 @@ routers.get('/crash-test', () => {
   }, 0);
 });
 
-routers.post('/signup', createUser);
-routers.post('/signin', loginUser);
+routers.post('/signup', validationDataUser, createUser);
+routers.post('/signin', validationDataUser, loginUser);
 routers.use(auth);
 routers.use('/', cardsRoutes);
 routers.use('/', userRoutes);

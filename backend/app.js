@@ -28,7 +28,7 @@ app.use(errorLogger);
 app.use(errors());
 
 app.use((err, req, res, next) => {
-  let { statusCode = 500, message } = err;
+  const { statusCode = 500, message } = err;
   res
     .status(statusCode)
     .send({

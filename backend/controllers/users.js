@@ -55,7 +55,7 @@ const loginUser = async (req, res, next) => {
     const { email, password } = req.body;
     const user = await User.findUsersByCredentials(email, password);
     if (user.message) {
-      throw new UnauthorizedErr('Неправильные почта или пароль');
+      throw new BadRequestErr('Неправильные почта или пароль');
     } else {
       const payload = { _id: user._id };
       const token = await generateToken(payload);
@@ -95,8 +95,8 @@ const updateAvatarProfile = async (req, res, next) => {
       res.status(200).send(data);
     }
   } catch (err) {
-    if(err.name === 'MongoError' || err.name === 'ValidationError') {
-      err = new BadRequestErr('Невалидные данные');
+    if (err.name === 'MongoError' || err.name === 'ValidationError') {
+      return new BadRequestErr('Невалидные данные');
     }
     next(err);
   }

@@ -35,8 +35,8 @@ const createCard = async (req, res, next) => {
     const savedCard = await Card.create({ name, link, owner });
     res.status(200).send(savedCard);
   } catch (err) {
-    if(err.name === 'MongoError' || err.name === 'ValidationError') {
-      err = new BadRequestErr('Невалидные данные');
+    if (err.name === 'MongoError' || err.name === 'ValidationError') {
+      return new BadRequestErr('Невалидные данные');
     }
     next(err);
   }
@@ -56,13 +56,14 @@ const deleteCard = async (req, res, next) => {
 
     const deletedCard = await Card.findByIdAndDelete(id);
     return res.send(deletedCard);
-
   } catch (err) {
-    if(err.message === 'NotFound') {
-      err = new NotFoundError('Карточка с таким id не найдена');
+    if (err.message === 'NotFound') {
+      return new NotFoundError('Карточка с таким id не найдена');
     }
     next(err);
   }
+
+  return null;
 };
 
 const likeCard = async (req, res, next) => {
