@@ -48,7 +48,7 @@ const App = () => {
         }
       }
     } catch (err) {
-      console.log({ message: 'Что-то пошло не так' }, err);
+      console.log({ message: err.name }, err);
     }
   };
 
@@ -58,11 +58,11 @@ const App = () => {
       if (data.token) {
         token.set('mesto', data.token);
         await tokenCheck();
+        onSuccessPopup(true);
         return data;
-      } if (data.message) {
-        console.log({ message: `${data.message}` });
       }
     } catch (err) {
+      offSuccessPopup(false)
       console.log({ message: 'Что-то пошло не так' }, err);
     }
   };

@@ -62,6 +62,7 @@ const loginUser = async (req, res, next) => {
       res.send({ token });
     }
   } catch (err) {
+    console.log(err.message)
     next(err);
   }
 };
