@@ -23,7 +23,7 @@ const Register = ({onRegister}) => {
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
-    if (!(userData.password && userData.email)) {
+    if (!userData.password || !userData.email) {
       return;
     }
     const { email, password } = userData;

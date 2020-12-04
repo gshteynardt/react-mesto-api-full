@@ -2,7 +2,7 @@ const Card = require('../models/card');
 const NotFoundError = require('../errors/not-found-err');
 const ForbiddenError = require('../errors/forbidden-err');
 const BadRequestErr = require('../errors/bad-request-err');
-const ConflictError = require("../errors/conflict-err");
+const ConflictError = require('../errors/conflict-err');
 
 const getCards = async (req, res, next) => {
   try {
@@ -29,9 +29,7 @@ const getCard = async (req, res, next) => {
 const createCard = async (req, res, next) => {
   try {
     const { name, link } = req.body;
-    const owner = req.user._id;
-    console.log(owner)
-    console.log(req.user._id)
+    const owner = req.user;
     const savedCard = await Card.create({ name, link, owner });
     res.status(200).send(savedCard);
   } catch (err) {
