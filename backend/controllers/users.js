@@ -19,7 +19,8 @@ const getUsers = async (req, res, next) => {
 };
 
 const getUser = async (req, res, next) => {
-  const { _id } = req.user;
+  const _id = req.user;
+
   try {
     const queryUser = await User.findById(_id)
       .orFail(new UnauthorizedErr('Пользователь не найден'));
@@ -65,7 +66,7 @@ const loginUser = async (req, res, next) => {
   try {
     const { email, password } = req.body;
     const user = await User.findUsersByCredentials(email, password);
-    const payload = { _id: user._id };
+    const payload = user._id;
     const token = await generateToken(payload);
     res.send({ token });
   } catch (err) {

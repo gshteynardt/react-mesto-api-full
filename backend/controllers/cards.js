@@ -45,7 +45,7 @@ const createCard = async (req, res, next) => {
 
 const deleteCard = async (req, res, next) => {
   try {
-    const user = String(req.user._id);
+    const user = String(req.user);
     const { id } = req.params;
     const queryCard = await Card.findById(id)
       .orFail(new NotFoundError('Пользователя не существует'));
@@ -69,7 +69,7 @@ const likeCard = async (req, res, next) => {
     const { id } = req.params;
     const card = await Card.findByIdAndUpdate(
       id,
-      { $addToSet: { likes: req.user._id } },
+      { $addToSet: { likes: req.user } },
       { new: true },
     ).orFail(new NotFoundError('Карточка с таким id не найдена'));
 
@@ -85,7 +85,7 @@ const dislikeCard = async (req, res, next) => {
     const { id } = req.params;
     const card = await Card.findByIdAndUpdate(
       id,
-      { $pull: { likes: req.user._id } },
+      { $pull: { likes: req.user } },
       { new: true },
     ).orFail(new NotFoundError('Карточка с таким id не найдена'));
     res.status(200).send(card);

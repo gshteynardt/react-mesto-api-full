@@ -20,7 +20,7 @@ module.exports = async (req, res, next) => {
       next(new UnauthorizedErr('Необходима авторизация'));
     }
 
-    req.user = payload;
+    req.user = payload._id;
     next();
   } catch (err) {
     next(err);
