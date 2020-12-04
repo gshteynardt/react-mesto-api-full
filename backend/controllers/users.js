@@ -62,9 +62,7 @@ const loginUser = async (req, res, next) => {
   try {
     const { email, password } = req.body;
     const user = await User.findUsersByCredentials(email, password);
-    console.log(user);
     const payload = { _id: user._id };
-    console.log(payload);
     const token = await generateToken(payload);
     res.send({ token });
   } catch (err) {

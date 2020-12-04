@@ -71,7 +71,7 @@ const likeCard = async (req, res, next) => {
       id,
       { $addToSet: { likes: req.user._id } },
       { new: true },
-    ).orFail(NotFoundError('Карточка с таким id не найдена'));
+    ).orFail(new NotFoundError('Карточка с таким id не найдена'));
 
     res.status(200).send(card);
   } catch (err) {
@@ -87,7 +87,7 @@ const dislikeCard = async (req, res, next) => {
       id,
       { $pull: { likes: req.user._id } },
       { new: true },
-    ).orFail(NotFoundError('Карточка с таким id не найдена'));
+    ).orFail(new NotFoundError('Карточка с таким id не найдена'));
     res.status(200).send(card);
   } catch (err) {
     next(err);
