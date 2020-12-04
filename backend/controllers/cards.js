@@ -37,8 +37,9 @@ const createCard = async (req, res, next) => {
       next(new ConflictError('Невалидные данные'));
     } else if (err.name === 'ValidationError') {
       next(new BadRequestErr('Невалидные данные'));
+    } else {
+      next(err);
     }
-    next(err);
   }
   return null;
 };

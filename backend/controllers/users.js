@@ -55,9 +55,10 @@ const createUser = async (req, res, next) => {
     if (err.name === 'MongoError' && err.code === 11000) {
       next(new ConflictError('Невалидные данные'));
     } else if (err.name === 'ValidationError') {
-      return new BadRequestErr('Невалидные данные');
+      next(new BadRequestErr('Невалидные данные'));
+    } else {
+      next(err);
     }
-    next(err);
   }
   return null;
 };
