@@ -21,7 +21,7 @@ const getUsers = async (req, res, next) => {
 const getUser = async (req, res, next) => {
   const { _id } = req.user;
   try {
-    const queryUser = await User.findById(_id).select('+password')
+    const queryUser = await User.findById(_id)
       .orFail(new UnauthorizedErr('Пользователь не найден'));
     res.status(200).send(queryUser);
   } catch (err) {
@@ -46,7 +46,10 @@ const createUser = async (req, res, next) => {
       about,
     });
 
-    return res.status(200).send({ data: savedUser });
+    const data = savedUser.toJSON();
+    delete data.password;
+
+    return res.status(200).send({ data });
   } catch (err) {
     if (err.name === 'MongoError' && err.code === 11000) {
       next(new ConflictError('Невалидные данные'));
