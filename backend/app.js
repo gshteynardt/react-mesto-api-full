@@ -7,6 +7,7 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 require('dotenv').config();
 
 const routers = require('./routes/index.js');
+const ConflictError = require("./errors/conflict-err");
 
 const app = express();
 const { PORT = 3000 } = process.env;
@@ -21,15 +22,14 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
   useFindAndModify: false,
 });
 
-app.use(express.json());
 app.use(requestLogger);
 app.use('/', routers);
 app.use(errorLogger);
 app.use(errors());
 
 app.use((err, req, res, next) => {
-
   const { statusCode = 500, message } = err;
+  console.log(err)
   res
     .status(statusCode)
     .send({

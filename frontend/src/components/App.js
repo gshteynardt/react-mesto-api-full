@@ -18,7 +18,7 @@ const App = () => {
 
   useEffect(() => {
     tokenCheck()
-  }, []);
+  }, [loggedIn]);
 
   const closeInfoPopup = () => {
     setIsOpen(false);
