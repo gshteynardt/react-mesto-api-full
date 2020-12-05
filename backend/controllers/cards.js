@@ -49,7 +49,7 @@ const deleteCard = async (req, res, next) => {
     const user = String(req.user);
     const { id } = req.params;
     const queryCard = await Card.findById(id)
-      .orFail(new NotFoundError('Пользователя не существует'));
+      .orFail(new NotFoundError('Карточка не найдена'));
     const queryCardOwner = String(queryCard.owner);
 
     if (user !== queryCardOwner) {
